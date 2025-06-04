@@ -4,10 +4,22 @@ from bson import ObjectId
 
 class ObjectIdField(serializers.Field):
     def to_representation(self, value):
-        return str(value)
+        import logging
+        logger = logging.getLogger('django.request')
+        try:
+            return str(value)
+        except Exception as e:
+            logger.error(f"Error in ObjectIdField to_representation: {e}")
+            raise
 
     def to_internal_value(self, data):
-        return ObjectId(data)
+        import logging
+        logger = logging.getLogger('django.request')
+        try:
+            return ObjectId(data)
+        except Exception as e:
+            logger.error(f"Error in ObjectIdField to_internal_value: {e}")
+            raise
 
 class UserSerializer(serializers.ModelSerializer):
     _id = ObjectIdField()

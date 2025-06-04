@@ -19,6 +19,22 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+    def list(self, request, *args, **kwargs):
+        from django.http import JsonResponse
+        import logging
+
+        print("UserViewSet list method called")  # Confirming method execution
+
+        logger = logging.getLogger('django.request')
+        try:
+            logger.debug("Fetching all users from the database.")
+            queryset = self.get_queryset()
+            logger.debug(f"Queryset: {queryset}")
+            return super().list(request, *args, **kwargs)
+        except Exception as e:
+            logger.error(f"Error in UserViewSet list method: {e}")
+            return JsonResponse({'error': 'An error occurred while fetching users.'}, status=500)
+
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
