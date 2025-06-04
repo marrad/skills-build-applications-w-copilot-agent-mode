@@ -12,7 +12,7 @@ DATABASES = {
 }
 
 # Enable CORS
-INSTALLED_APPS += ['corsheaders']
+INSTALLED_APPS += ['corsheaders', 'djongo']
 MIDDLEWARE.insert(0, 'corsheaders.middleware.CorsMiddleware')
 CORS_ALLOW_ALL_ORIGINS = True
 ALLOWED_HOSTS = ['*']
